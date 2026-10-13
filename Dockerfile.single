@@ -1,0 +1,19 @@
+# ==============================================================================
+# Single-stage Dockerfile: Không tách biệt môi trường build và runtime
+# Kèm toàn bộ file cache, tools biên dịch, dung lượng lớn
+# ==============================================================================
+FROM node:18-alpine
+
+WORKDIR /app
+
+ENV PORT=3000
+
+# Copy toàn bộ mã nguồn cùng lúc (không tối ưu cache)
+COPY . .
+
+# Cài đặt đầy đủ dependencies
+RUN npm install
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
